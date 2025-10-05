@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Service;
 
 use App\Entity\User;
@@ -13,7 +14,8 @@ class PasswordResetService
         private readonly UserRepository $userRepository,
         private readonly EntityManagerInterface $em,
         private readonly MailerInterface $mailer
-    ) {}
+    ) {
+    }
 
     public function createResetToken(string $email): ?string
     {
@@ -50,7 +52,7 @@ class PasswordResetService
         if (!$user->getPasswordResetExpiresAt() || $user->getPasswordResetExpiresAt() < new \DateTimeImmutable()) {
             return null;
         }
-        
+
         $user->setPasswordResetTokenHash(null);
         $user->setPasswordResetExpiresAt(null);
         $this->em->flush();
