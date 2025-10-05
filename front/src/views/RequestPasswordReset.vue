@@ -2,13 +2,9 @@
   <div
     class="min-h-screen bg-gradient-to-br from-forest-500 to-moss-600 flex items-center justify-center p-4 animate-gradient"
   >
-    <div
-      class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md card-entrance"
-    >
+    <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md card-entrance">
       <div class="header-fade-in">
-        <h1 class="text-3xl font-bold text-forest-600 mb-2 text-center">
-          Mot de passe oublié
-        </h1>
+        <h1 class="text-3xl font-bold text-forest-600 mb-2 text-center">Mot de passe oublié</h1>
         <p class="text-gray-600 mb-6 text-center">
           Entrez votre email pour recevoir un lien de réinitialisation
         </p>
@@ -91,31 +87,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import api from "../services/api";
+import { ref } from 'vue';
+import api from '../services/api';
 
 const form = ref({
-  email: "",
+  email: '',
 });
 
 const loading = ref(false);
-const error = ref("");
-const success = ref("");
+const error = ref('');
+const success = ref('');
 
 const handleRequestReset = async () => {
   loading.value = true;
-  error.value = "";
-  success.value = "";
+  error.value = '';
+  success.value = '';
 
   try {
-    await api.post("/password/forgot", form.value);
-    success.value =
-      "Un email de réinitialisation a été envoyé à votre adresse.";
-    form.value.email = "";
+    await api.post('/password/forgot', form.value);
+    success.value = 'Un email de réinitialisation a été envoyé à votre adresse.';
+    form.value.email = '';
   } catch (err: any) {
-    error.value =
-      err.response?.data?.message ||
-      "Une erreur est survenue. Veuillez réessayer.";
+    error.value = err.response?.data?.message || 'Une erreur est survenue. Veuillez réessayer.';
   } finally {
     loading.value = false;
   }
@@ -220,7 +213,9 @@ const handleRequestReset = async () => {
 }
 
 .success-pulse {
-  animation: slideIn 0.4s ease-out, pulse 1.5s ease-in-out 0.4s infinite;
+  animation:
+    slideIn 0.4s ease-out,
+    pulse 1.5s ease-in-out 0.4s infinite;
 }
 
 .animate-gradient {

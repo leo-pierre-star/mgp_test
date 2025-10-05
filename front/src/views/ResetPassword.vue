@@ -2,22 +2,13 @@
   <div
     class="min-h-screen bg-gradient-to-br from-forest-500 to-moss-600 flex items-center justify-center p-4 animate-gradient"
   >
-    <div
-      class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md card-entrance"
-    >
+    <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md card-entrance">
       <div class="header-fade-in">
-        <h1 class="text-3xl font-bold text-forest-600 mb-2 text-center">
-          Réinitialisation
-        </h1>
-        <p class="text-gray-600 mb-6 text-center">
-          Définissez votre nouveau mot de passe
-        </p>
+        <h1 class="text-3xl font-bold text-forest-600 mb-2 text-center">Réinitialisation</h1>
+        <p class="text-gray-600 mb-6 text-center">Définissez votre nouveau mot de passe</p>
       </div>
 
-      <form
-        @submit.prevent="handleResetPassword"
-        class="space-y-4 form-fade-in"
-      >
+      <form @submit.prevent="handleResetPassword" class="space-y-4 form-fade-in">
         <div class="input-group">
           <label
             for="token"
@@ -60,17 +51,11 @@
             >
               <span
                 class="transition-all duration-300 transform"
-                :class="
-                  passwordChecks.length
-                    ? 'text-green-600 scale-110'
-                    : 'text-red-600'
-                "
+                :class="passwordChecks.length ? 'text-green-600 scale-110' : 'text-red-600'"
               >
-                {{ passwordChecks.length ? "✓" : "✗" }}
+                {{ passwordChecks.length ? '✓' : '✗' }}
               </span>
-              <span class="ml-2 transition-colors duration-200"
-                >Au moins 8 caractères</span
-              >
+              <span class="ml-2 transition-colors duration-200">Au moins 8 caractères</span>
             </div>
             <div
               class="flex items-center text-xs check-item"
@@ -78,17 +63,11 @@
             >
               <span
                 class="transition-all duration-300 transform"
-                :class="
-                  passwordChecks.uppercase
-                    ? 'text-green-600 scale-110'
-                    : 'text-red-600'
-                "
+                :class="passwordChecks.uppercase ? 'text-green-600 scale-110' : 'text-red-600'"
               >
-                {{ passwordChecks.uppercase ? "✓" : "✗" }}
+                {{ passwordChecks.uppercase ? '✓' : '✗' }}
               </span>
-              <span class="ml-2 transition-colors duration-200"
-                >Une majuscule</span
-              >
+              <span class="ml-2 transition-colors duration-200">Une majuscule</span>
             </div>
             <div
               class="flex items-center text-xs check-item"
@@ -96,17 +75,11 @@
             >
               <span
                 class="transition-all duration-300 transform"
-                :class="
-                  passwordChecks.number
-                    ? 'text-green-600 scale-110'
-                    : 'text-red-600'
-                "
+                :class="passwordChecks.number ? 'text-green-600 scale-110' : 'text-red-600'"
               >
-                {{ passwordChecks.number ? "✓" : "✗" }}
+                {{ passwordChecks.number ? '✓' : '✗' }}
               </span>
-              <span class="ml-2 transition-colors duration-200"
-                >Un chiffre</span
-              >
+              <span class="ml-2 transition-colors duration-200">Un chiffre</span>
             </div>
             <div
               class="flex items-center text-xs check-item"
@@ -114,17 +87,11 @@
             >
               <span
                 class="transition-all duration-300 transform"
-                :class="
-                  passwordChecks.special
-                    ? 'text-green-600 scale-110'
-                    : 'text-red-600'
-                "
+                :class="passwordChecks.special ? 'text-green-600 scale-110' : 'text-red-600'"
               >
-                {{ passwordChecks.special ? "✓" : "✗" }}
+                {{ passwordChecks.special ? '✓' : '✗' }}
               </span>
-              <span class="ml-2 transition-colors duration-200"
-                >Un caractère spécial</span
-              >
+              <span class="ml-2 transition-colors duration-200">Un caractère spécial</span>
             </div>
           </div>
         </div>
@@ -145,9 +112,7 @@
             placeholder="••••••••"
           />
           <p
-            v-if="
-              form.confirmPassword && form.password !== form.confirmPassword
-            "
+            v-if="form.confirmPassword && form.password !== form.confirmPassword"
             class="text-xs text-red-600 mt-1 animate-shake"
           >
             Les mots de passe ne correspondent pas
@@ -170,11 +135,7 @@
 
         <button
           type="submit"
-          :disabled="
-            loading ||
-            !isPasswordValid ||
-            form.password !== form.confirmPassword
-          "
+          :disabled="loading || !isPasswordValid || form.password !== form.confirmPassword"
           class="w-full bg-forest-600 hover:bg-forest-700 text-white font-semibold py-3 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
         >
           <span v-if="loading" class="inline-flex items-center">
@@ -217,16 +178,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
-import api from "../services/api";
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import api from '../services/api';
 
 const router = useRouter();
 
 const form = ref({
-  token: "",
-  password: "",
-  confirmPassword: "",
+  token: '',
+  password: '',
+  confirmPassword: '',
 });
 
 const passwordChecks = ref({
@@ -237,8 +198,8 @@ const passwordChecks = ref({
 });
 
 const loading = ref(false);
-const error = ref("");
-const success = ref("");
+const error = ref('');
+const success = ref('');
 
 const validatePassword = () => {
   const password = form.value.password;
@@ -256,22 +217,20 @@ const isPasswordValid = computed(() => {
 
 const handleResetPassword = async () => {
   loading.value = true;
-  error.value = "";
-  success.value = "";
+  error.value = '';
+  success.value = '';
 
   try {
-    await api.post("/password/reset", {
+    await api.post('/password/reset', {
       token: form.value.token,
       password: form.value.password,
     });
-    success.value = "Mot de passe réinitialisé avec succès ! Redirection...";
+    success.value = 'Mot de passe réinitialisé avec succès ! Redirection...';
     setTimeout(() => {
-      router.push("/login");
+      router.push('/login');
     }, 2000);
   } catch (err: any) {
-    error.value =
-      err.response?.data?.message ||
-      "Une erreur est survenue. Veuillez réessayer.";
+    error.value = err.response?.data?.message || 'Une erreur est survenue. Veuillez réessayer.';
   } finally {
     loading.value = false;
   }
@@ -401,7 +360,9 @@ const handleResetPassword = async () => {
 }
 
 .success-pulse {
-  animation: slideIn 0.4s ease-out, pulse 1.5s ease-in-out 0.4s infinite;
+  animation:
+    slideIn 0.4s ease-out,
+    pulse 1.5s ease-in-out 0.4s infinite;
 }
 
 .animate-gradient {

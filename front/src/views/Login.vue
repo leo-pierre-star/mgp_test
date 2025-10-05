@@ -2,16 +2,10 @@
   <div
     class="min-h-screen bg-gradient-to-br from-forest-500 to-moss-600 flex items-center justify-center p-4 animate-gradient"
   >
-    <div
-      class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md card-entrance"
-    >
+    <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md card-entrance">
       <div class="header-fade-in">
-        <h1 class="text-3xl font-bold text-forest-600 mb-2 text-center">
-          Connexion
-        </h1>
-        <p class="text-gray-600 mb-6 text-center">
-          Accédez à votre espace client
-        </p>
+        <h1 class="text-3xl font-bold text-forest-600 mb-2 text-center">Connexion</h1>
+        <p class="text-gray-600 mb-6 text-center">Accédez à votre espace client</p>
       </div>
 
       <form @submit.prevent="handleLogin" class="space-y-4 form-fade-in">
@@ -110,32 +104,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import api from "../services/api";
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import api from '../services/api';
 
 const router = useRouter();
 
 const form = ref({
-  username: "",
-  password: "",
+  username: '',
+  password: '',
 });
 
 const loading = ref(false);
-const error = ref("");
+const error = ref('');
 
 const handleLogin = async () => {
   loading.value = true;
-  error.value = "";
+  error.value = '';
 
   try {
-    const response = await api.post("/login_check", form.value);
-    localStorage.setItem("token", response.data.token);
-    router.push("/dashboard");
+    const response = await api.post('/login_check', form.value);
+    localStorage.setItem('token', response.data.token);
+    router.push('/dashboard');
   } catch (err: any) {
-    error.value =
-      err.response?.data?.message ||
-      "Une erreur est survenue. Veuillez réessayer.";
+    error.value = err.response?.data?.message || 'Une erreur est survenue. Veuillez réessayer.';
   } finally {
     loading.value = false;
   }

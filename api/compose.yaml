@@ -1,22 +1,44 @@
+# Docker Compose Configuration - MGP Test
+# Usage: docker compose -f api/compose.yaml up -d --build
+
 services:
+  # ============================================
+  # API - Symfony Backend
+  # ============================================
   api:
     build: .
+    container_name: mgp-api
     working_dir: /app
     volumes:
       - .:/app
     ports:
       - "8000:8000"
     environment:
+      # Database connection (auto-configured via service name)
+      DATABASE_URL: postgresql://mgp:mgp@database:5432/mgp?serverVersion=17&charset=utf8
+      # Mail configuration (MailHog for development)
       MAILER_DSN: smtp://mailhog:1025
       MAILER_DEFAULT_FROM: no-reply@example.test
-      FRONT_RESET_BASE_URL: http://localhost:5173/reset-password
+      # Frontend URL for password reset emails
+      FRONT_RESET_BASE_URL: http://localhost:3000/reset-password
+      # App environment
+      APP_ENV: dev
+      APP_DEBUG: 1
     depends_on:
-      - database
-      - mailhog
+      database:
+        condition: service_healthy
+      mailhog:
+        condition: service_started
     command: sh -c "php -S 0.0.0.0:8000 -t public"
-  ###> doctrine/doctrine-bundle ###
+    networks:
+      - mgp-network
+
+  # ============================================
+  # Database - PostgreSQL 17
+  # ============================================
   database:
     image: postgres:${POSTGRES_VERSION:-17}-alpine
+    container_name: mgp-database
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-mgp}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mgp}
@@ -38,28 +60,56 @@ services:
       - database_data:/var/lib/postgresql/data:rw
     ports:
       - "5432:5432"
-  ###< doctrine/doctrine-bundle ###
+    networks:
+      - mgp-network
+
+  # ============================================
+  # MailHog - Email Testing Tool
+  # ============================================
   mailhog:
     image: mailhog/mailhog:v1.0.1
+    container_name: mgp-mailhog
     ports:
-      - "8025:8025"
+      - "8025:8025" # Web UI
+      - "1025:1025" # SMTP
+    networks:
+      - mgp-network
 
+  # ============================================
+  # Frontend - Vue 3 + Vite
+  # ============================================
   front:
     build:
       context: ../front
+      dockerfile: Dockerfile
+    container_name: mgp-front
     working_dir: /app
     environment:
+      # API URL for the frontend
       VITE_API_URL: http://localhost:8000/api
+      # Vite configuration
+      NODE_ENV: development
     volumes:
       - ../front:/app
-      - /app/node_modules
+      - /app/node_modules # Prevent node_modules from being overwritten
     command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
     ports:
-      - "3000:5173"
+      - "3000:5173" # Host:Container (Vite default port is 5173)
     depends_on:
       - api
+    networks:
+      - mgp-network
 
+# ============================================
+# Volumes
+# ============================================
 volumes:
-  ###> doctrine/doctrine-bundle ###
   database_data:
-###< doctrine/doctrine-bundle ###
+    driver: local
+
+# ============================================
+# Networks
+# ============================================
+networks:
+  mgp-network:
+    driver: bridge
