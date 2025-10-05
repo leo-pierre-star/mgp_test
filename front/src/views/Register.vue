@@ -43,7 +43,6 @@
             placeholder="••••••••"
           />
 
-          <!-- Indicateur de force du mot de passe -->
           <div v-if="form.password" class="mt-2 space-y-1 password-checks">
             <div
               class="flex items-center text-xs check-item"

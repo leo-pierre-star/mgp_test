@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <!-- Header -->
     <header class="bg-white shadow-sm header-slide-down">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <h1 class="text-2xl font-bold text-forest-600">Espace Client</h1>
@@ -13,7 +12,6 @@
       </div>
     </header>
 
-    <!-- Main Content -->
     <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div class="bg-white rounded-lg shadow-md p-6 md:p-8 card-entrance">
         <h2 class="text-2xl font-bold text-gray-800 mb-6 header-fade-in">Formulaire de contact</h2>
@@ -125,7 +123,6 @@
         </form>
       </div>
 
-      <!-- Historique des messages (optionnel) -->
       <div v-if="messages.length > 0" class="mt-8 bg-white rounded-lg shadow-md p-6 card-entrance">
         <h3 class="text-xl font-bold text-gray-800 mb-4 header-fade-in">
           Historique de vos messages
@@ -253,26 +250,9 @@ const handleLogout = () => {
   localStorage.removeItem('token');
   router.push('/login');
 };
-
-// Optionnel : charger l'historique des messages
-// const loadMessages = async () => {
-//   try {
-//     const response = await api.get('/contact/history')
-//     messages.value = response.data
-//   } catch (err) {
-//     console.error('Erreur lors du chargement des messages', err)
-//   }
-// }
-
-// onMounted(() => {
-//   loadMessages()
-// })
-//   }
-// }
 </script>
 
 <style scoped>
-/* Card Entrance Animation */
 @keyframes cardEntrance {
   0% {
     opacity: 0;
@@ -288,7 +268,6 @@ const handleLogout = () => {
   animation: cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Fade In Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -310,7 +289,6 @@ const handleLogout = () => {
   animation: fadeIn 1s ease-in-out 0.4s both;
 }
 
-/* Slide Down Animation for Header */
 @keyframes slideDown {
   from {
     opacity: 0;
@@ -326,7 +304,6 @@ const handleLogout = () => {
   animation: slideDown 0.5s ease-out;
 }
 
-/* Slide In Animation */
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -354,7 +331,6 @@ const handleLogout = () => {
   animation-delay: 0.3s;
 }
 
-/* Alert Slide In */
 @keyframes alertSlide {
   from {
     opacity: 0;
@@ -370,7 +346,6 @@ const handleLogout = () => {
   animation: alertSlide 0.3s ease-out;
 }
 
-/* Shake Animation for Errors */
 @keyframes shake {
   0%,
   100% {
@@ -388,7 +363,6 @@ const handleLogout = () => {
   animation: shake 0.3s ease-in-out;
 }
 
-/* Success Pulse */
 @keyframes successPulse {
   0%,
   100% {
@@ -403,7 +377,6 @@ const handleLogout = () => {
   animation: successPulse 0.5s ease-in-out;
 }
 
-/* Gradient Animation */
 @keyframes gradient {
   0% {
     background-position: 0% 50%;
@@ -421,7 +394,6 @@ const handleLogout = () => {
   animation: gradient 15s ease infinite;
 }
 
-/* Spin Animation for Loading */
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -435,7 +407,6 @@ const handleLogout = () => {
   animation: spin 1s linear infinite;
 }
 
-/* File Selected Animation */
 @keyframes fileSelected {
   from {
     opacity: 0;
@@ -451,7 +422,6 @@ const handleLogout = () => {
   animation: fileSelected 0.3s ease-out;
 }
 
-/* Message Item Stagger */
 @keyframes messageItem {
   from {
     opacity: 0;
@@ -467,13 +437,11 @@ const handleLogout = () => {
   animation: messageItem 0.4s ease-out backwards;
 }
 
-/* Hover Effects */
 .input-group input:focus,
 .input-group textarea:focus {
   box-shadow: 0 0 0 3px rgba(34, 139, 34, 0.1);
 }
 
-/* Button Hover Enhancement */
 button:not(:disabled):hover {
   box-shadow: 0 10px 20px -10px rgba(34, 139, 34, 0.4);
 }

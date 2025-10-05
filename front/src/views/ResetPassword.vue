@@ -11,23 +11,6 @@
       <form @submit.prevent="handleResetPassword" class="space-y-4 form-fade-in">
         <div class="input-group">
           <label
-            for="token"
-            class="block text-sm font-medium text-gray-700 mb-1 transition-all duration-200"
-          >
-            Code de réinitialisation
-          </label>
-          <input
-            id="token"
-            v-model="form.token"
-            type="text"
-            required
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest-500 focus:border-transparent outline-none transition-all duration-300 hover:border-forest-300 focus:scale-[1.02]"
-            placeholder="Code reçu par email"
-          />
-        </div>
-
-        <div class="input-group">
-          <label
             for="password"
             class="block text-sm font-medium text-gray-700 mb-1 transition-all duration-200"
           >
@@ -43,7 +26,6 @@
             placeholder="••••••••"
           />
 
-          <!-- Indicateur de force du mot de passe -->
           <div v-if="form.password" class="mt-2 space-y-1 password-checks">
             <div
               class="flex items-center text-xs check-item"
@@ -185,7 +167,6 @@ import api from '../services/api';
 const router = useRouter();
 
 const form = ref({
-  token: '',
   password: '',
   confirmPassword: '',
 });
@@ -238,7 +219,6 @@ const handleResetPassword = async () => {
 </script>
 
 <style scoped>
-/* Animations d'entrée */
 @keyframes cardEntrance {
   from {
     opacity: 0;
@@ -307,7 +287,6 @@ const handleResetPassword = async () => {
   }
 }
 
-/* Classes d'animation */
 .card-entrance {
   animation: cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -370,7 +349,6 @@ const handleResetPassword = async () => {
   animation: gradient 15s ease infinite;
 }
 
-/* Transitions au hover */
 button:not(:disabled):hover {
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
 }
@@ -379,7 +357,6 @@ input:focus {
   box-shadow: 0 0 0 3px rgba(74, 129, 84, 0.1);
 }
 
-/* Animation du spinner */
 @keyframes spin {
   to {
     transform: rotate(360deg);
