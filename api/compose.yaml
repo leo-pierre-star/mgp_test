@@ -9,7 +9,7 @@ services:
     environment:
       MAILER_DSN: smtp://mailhog:1025
       MAILER_DEFAULT_FROM: no-reply@example.test
-      FRONT_RESET_BASE_URL: http://localhost:3000/reset-password
+      FRONT_RESET_BASE_URL: http://localhost:5173/reset-password
     depends_on:
       - database
       - mailhog
@@ -49,12 +49,13 @@ services:
       context: ../front
     working_dir: /app
     environment:
-      VITE_API_BASE_URL: http://localhost:8000/api
+      VITE_API_URL: http://localhost:8000/api
     volumes:
       - ../front:/app
+      - /app/node_modules
     command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
     ports:
-      - "3000:3000"
+      - "3000:5173"
     depends_on:
       - api
 
